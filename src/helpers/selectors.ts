@@ -109,7 +109,7 @@ export function getQuality(token: InternalSelector): number {
                             0,
                             Math.min(
                                 ...token.data.map((d) =>
-                                    Math.min(...d.map(getQuality)),
+                                    { throw new Error("STUB"); },
                                 ),
                             ),
                         )
@@ -127,10 +127,5 @@ export function getQuality(token: InternalSelector): number {
  * @param t Selector token under inspection.
  */
 export function includesScopePseudo(t: InternalSelector): boolean {
-    return (
-        t.type === SelectorType.Pseudo &&
-        (t.name === "scope" ||
-            (Array.isArray(t.data) &&
-                t.data.some((data) => data.some(includesScopePseudo))))
-    );
+    throw new Error("STUB");
 }

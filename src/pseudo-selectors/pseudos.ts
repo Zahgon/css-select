@@ -19,98 +19,26 @@ const isDocumentWhiteSpace = /^[ \t\r\n]*$/;
 /** Runtime pseudo selector implementations. */
 export const pseudos: Record<string, Pseudo> = {
     empty(element, { adapter }) {
-        const children = adapter.getChildren(element);
-        return (
-            // First, make sure the tag does not have any element children.
-            children.every((element) => !adapter.isTag(element)) &&
-            // Then, check that the text content is only whitespace.
-            children.every((element) =>
-                // FIXME: `getText` call is potentially expensive.
-                isDocumentWhiteSpace.test(adapter.getText(element)),
-            )
-        );
+        throw new Error("STUB");
     },
 
     "first-child"(element, { adapter, equals }) {
-        if (adapter.prevElementSibling) {
-            return adapter.prevElementSibling(element) == null;
-        }
-
-        const firstChild = adapter
-            .getSiblings(element)
-            .find((sibling) => adapter.isTag(sibling));
-        return firstChild != null && equals(element, firstChild);
+        throw new Error("STUB");
     },
     "last-child"(element, { adapter, equals }) {
-        const siblings = adapter.getSiblings(element);
-
-        for (let index = siblings.length - 1; index >= 0; index--) {
-            if (equals(element, siblings[index])) {
-                return true;
-            }
-            if (adapter.isTag(siblings[index])) {
-                break;
-            }
-        }
-
-        return false;
+        throw new Error("STUB");
     },
     "first-of-type"(element, { adapter, equals }) {
-        const siblings = adapter.getSiblings(element);
-        const elementName = adapter.getName(element);
-
-        for (const currentSibling of siblings) {
-            if (equals(element, currentSibling)) {
-                return true;
-            }
-            if (
-                adapter.isTag(currentSibling) &&
-                adapter.getName(currentSibling) === elementName
-            ) {
-                break;
-            }
-        }
-
-        return false;
+        throw new Error("STUB");
     },
     "last-of-type"(element, { adapter, equals }) {
-        const siblings = adapter.getSiblings(element);
-        const elementName = adapter.getName(element);
-
-        for (let index = siblings.length - 1; index >= 0; index--) {
-            const currentSibling = siblings[index];
-            if (equals(element, currentSibling)) {
-                return true;
-            }
-            if (
-                adapter.isTag(currentSibling) &&
-                adapter.getName(currentSibling) === elementName
-            ) {
-                break;
-            }
-        }
-
-        return false;
+        throw new Error("STUB");
     },
     "only-of-type"(element, { adapter, equals }) {
-        const elementName = adapter.getName(element);
-
-        return adapter
-            .getSiblings(element)
-            .every(
-                (sibling) =>
-                    equals(element, sibling) ||
-                    !adapter.isTag(sibling) ||
-                    adapter.getName(sibling) !== elementName,
-            );
+        throw new Error("STUB");
     },
     "only-child"(element, { adapter, equals }) {
-        return adapter
-            .getSiblings(element)
-            .every(
-                (sibling) =>
-                    equals(element, sibling) || !adapter.isTag(sibling),
-            );
+        throw new Error("STUB");
     },
 };
 

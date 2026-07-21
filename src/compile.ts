@@ -38,9 +38,7 @@ function absolutize<Node, ElementNode extends Node>(
     // TODO Use better check if the context is a document
     const hasContext = !!context?.every(
         (element) =>
-            element === PLACEHOLDER_ELEMENT ||
-            (adapter.isTag(element) &&
-                getElementParent(element, adapter) !== null),
+            { throw new Error("STUB"); },
     );
 
     for (const t of token) {
@@ -88,7 +86,7 @@ export function compileToken<Node, ElementNode extends Node>(
     // Check if the selector is relative
     if (options.relativeSelector !== false) {
         absolutize(token, options, finalContext);
-    } else if (token.some((t) => t.length > 0 && isTraversal(t[0]))) {
+    } else if (token.some((t) => { throw new Error("STUB"); })) {
         throw new Error(
             "Relative selectors are not allowed when the `relativeSelector` option is disabled",
         );
@@ -155,5 +153,5 @@ export function compileToken<Node, ElementNode extends Node>(
 }
 
 function or<T>(a: Predicate<T>, b: Predicate<T>): Predicate<T> {
-    return (element) => a(element) || b(element);
+    return (element) => { throw new Error("STUB"); };
 }

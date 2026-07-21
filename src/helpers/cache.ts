@@ -21,7 +21,7 @@ export function cacheParentResults<Node, ElementNode extends Node>(
     matches: (element: ElementNode) => boolean,
 ): CompiledQuery<ElementNode> {
     if (cacheResults === false || typeof WeakMap === "undefined") {
-        return (element) => next(element) && matches(element);
+        return (element) => { throw new Error("STUB"); };
     }
 
     // Use a cache to avoid re-checking children of an element.
@@ -37,26 +37,6 @@ export function cacheParentResults<Node, ElementNode extends Node>(
     }
 
     return function cachedMatcher(element) {
-        if (!next(element)) {
-            return false;
-        }
-        if (resultCache.has(element)) {
-            return resultCache.get(element) ?? false;
-        }
-
-        // Check all of the element's parents.
-        let node = element;
-
-        do {
-            const parent = getElementParent(node, adapter);
-
-            if (parent === null) {
-                return addResultToCache(element);
-            }
-
-            node = parent;
-        } while (!resultCache.has(node));
-
-        return resultCache.get(node) ? addResultToCache(element) : false;
+        throw new Error("STUB");
     };
 }

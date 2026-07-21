@@ -77,7 +77,7 @@ export function compileGeneralSelector<Node, ElementNode extends Node>(
             }
 
             return function tag(element: ElementNode): boolean {
-                return adapter.getName(element) === name && next(element);
+                throw new Error("STUB");
             };
         }
 
@@ -89,15 +89,7 @@ export function compileGeneralSelector<Node, ElementNode extends Node>(
                 typeof WeakMap === "undefined"
             ) {
                 return function descendant(element: ElementNode): boolean {
-                    let current: ElementNode | null = element;
-
-                    while ((current = getElementParent(current, adapter))) {
-                        if (next(current)) {
-                            return true;
-                        }
-                    }
-
-                    return false;
+                    throw new Error("STUB");
                 };
             }
 
@@ -107,97 +99,39 @@ export function compileGeneralSelector<Node, ElementNode extends Node>(
                 { matches: boolean }
             >();
             return function cachedDescendant(element: ElementNode): boolean {
-                let current: ElementNode | null = element;
-                let result: { matches: boolean } | undefined;
-
-                while ((current = getElementParent(current, adapter))) {
-                    const cached = resultCache.get(current);
-
-                    if (cached === undefined) {
-                        result ??= { matches: false };
-                        result.matches = next(current);
-                        resultCache.set(current, result);
-                        if (result.matches) {
-                            return true;
-                        }
-                    } else {
-                        if (result) {
-                            result.matches = cached.matches;
-                        }
-                        return cached.matches;
-                    }
-                }
-
-                return false;
+                throw new Error("STUB");
             };
         }
         case "_flexibleDescendant": {
             // Include element itself, only used while querying an array
             return function flexibleDescendant(element: ElementNode): boolean {
-                let current: ElementNode | null = element;
-
-                do {
-                    if (next(current)) {
-                        return true;
-                    }
-                    current = getElementParent(current, adapter);
-                } while (current);
-
-                return false;
+                throw new Error("STUB");
             };
         }
         case SelectorType.Parent: {
             return function parent(element: ElementNode): boolean {
-                return adapter
-                    .getChildren(element)
-                    .some((element) => adapter.isTag(element) && next(element));
+                throw new Error("STUB");
             };
         }
         case SelectorType.Child: {
             return function child(element: ElementNode): boolean {
-                const parent = getElementParent(element, adapter);
-                return parent !== null && next(parent);
+                throw new Error("STUB");
             };
         }
         case SelectorType.Sibling: {
             return function sibling(element: ElementNode): boolean {
-                const siblings = adapter.getSiblings(element);
-
-                for (const currentSibling of siblings) {
-                    if (equals(element, currentSibling)) {
-                        break;
-                    }
-                    if (adapter.isTag(currentSibling) && next(currentSibling)) {
-                        return true;
-                    }
-                }
-
-                return false;
+                throw new Error("STUB");
             };
         }
         case SelectorType.Adjacent: {
             if (adapter.prevElementSibling) {
                 return function adjacent(element: ElementNode): boolean {
-                    // biome-ignore lint/style/noNonNullAssertion: checked by if statement
-                    const previous = adapter.prevElementSibling!(element);
-                    return previous != null && next(previous);
+                    throw new Error("STUB");
                 };
             }
 
             return function adjacent(element: ElementNode): boolean {
-                const siblings = adapter.getSiblings(element);
-                let lastElement: ElementNode | undefined;
-
-                for (const currentSibling of siblings) {
-                    if (equals(element, currentSibling)) {
-                        break;
-                    }
-                    if (adapter.isTag(currentSibling)) {
-                        lastElement = currentSibling;
-                    }
-                }
-
-                return !!lastElement && next(lastElement);
+                throw new Error("STUB");
             };
         }
         case SelectorType.Universal: {

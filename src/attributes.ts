@@ -98,178 +98,32 @@ export const attributeRules: Record<
             value = value.toLowerCase();
 
             return (element) => {
-                const attribute = adapter.getAttributeValue(element, name);
-                return (
-                    attribute != null &&
-                    attribute.length === value.length &&
-                    attribute.toLowerCase() === value &&
-                    next(element)
-                );
+                throw new Error("STUB");
             };
         }
 
         return (element) =>
-            adapter.getAttributeValue(element, name) === value && next(element);
+            { throw new Error("STUB"); };
     },
     hyphen(next, data, options) {
-        const { adapter } = options;
-        const { name } = data;
-        let { value } = data;
-        const { length } = value;
-
-        if (shouldIgnoreCase(data, options)) {
-            value = value.toLowerCase();
-
-            return function hyphenIC(element) {
-                const attribute = adapter.getAttributeValue(element, name);
-                return (
-                    attribute != null &&
-                    (attribute.length === length ||
-                        attribute.charAt(length) === "-") &&
-                    attribute.substr(0, length).toLowerCase() === value &&
-                    next(element)
-                );
-            };
-        }
-
-        return function hyphen(element) {
-            const attribute = adapter.getAttributeValue(element, name);
-            return (
-                attribute != null &&
-                (attribute.length === length ||
-                    attribute.charAt(length) === "-") &&
-                attribute.substr(0, length) === value &&
-                next(element)
-            );
-        };
+        throw new Error("STUB");
     },
     element(next, data, options) {
-        const { adapter } = options;
-        const { name, value } = data;
-        if (whitespaceRe.test(value)) {
-            return boolbase.falseFunc;
-        }
-
-        const regex = new RegExp(
-            `(?:^|\\s)${escapeRegex(value)}(?:$|\\s)`,
-            shouldIgnoreCase(data, options) ? "i" : "",
-        );
-
-        return function element(node) {
-            const attribute = adapter.getAttributeValue(node, name);
-            return (
-                attribute != null &&
-                attribute.length >= value.length &&
-                regex.test(attribute) &&
-                next(node)
-            );
-        };
+        throw new Error("STUB");
     },
     exists(next, { name }, { adapter }) {
-        return (element) => adapter.hasAttrib(element, name) && next(element);
+        throw new Error("STUB");
     },
     start(next, data, options) {
-        const { adapter } = options;
-        const { name } = data;
-        let { value } = data;
-        const { length } = value;
-
-        if (length === 0) {
-            return boolbase.falseFunc;
-        }
-
-        if (shouldIgnoreCase(data, options)) {
-            value = value.toLowerCase();
-
-            return (element) => {
-                const attribute = adapter.getAttributeValue(element, name);
-                return (
-                    attribute != null &&
-                    attribute.length >= length &&
-                    attribute.substr(0, length).toLowerCase() === value &&
-                    next(element)
-                );
-            };
-        }
-
-        return (element) =>
-            !!adapter.getAttributeValue(element, name)?.startsWith(value) &&
-            next(element);
+        throw new Error("STUB");
     },
     end(next, data, options) {
-        const { adapter } = options;
-        const { name } = data;
-        let { value } = data;
-        const length = -value.length;
-
-        if (length === 0) {
-            return boolbase.falseFunc;
-        }
-
-        if (shouldIgnoreCase(data, options)) {
-            value = value.toLowerCase();
-
-            return (element) =>
-                adapter
-                    .getAttributeValue(element, name)
-                    ?.substr(length)
-                    .toLowerCase() === value && next(element);
-        }
-
-        return (element) =>
-            !!adapter.getAttributeValue(element, name)?.endsWith(value) &&
-            next(element);
+        throw new Error("STUB");
     },
     any(next, data, options) {
-        const { adapter } = options;
-        const { name, value } = data;
-
-        if (value === "") {
-            return boolbase.falseFunc;
-        }
-
-        if (shouldIgnoreCase(data, options)) {
-            const regex = new RegExp(escapeRegex(value), "i");
-
-            return function anyIC(element) {
-                const attribute = adapter.getAttributeValue(element, name);
-                return (
-                    attribute != null &&
-                    attribute.length >= value.length &&
-                    regex.test(attribute) &&
-                    next(element)
-                );
-            };
-        }
-
-        return (element) =>
-            !!adapter.getAttributeValue(element, name)?.includes(value) &&
-            next(element);
+        throw new Error("STUB");
     },
     not(next, data, options) {
-        const { adapter } = options;
-        const { name } = data;
-        let { value } = data;
-
-        if (value === "") {
-            return (element) =>
-                !!adapter.getAttributeValue(element, name) && next(element);
-        }
-        if (shouldIgnoreCase(data, options)) {
-            value = value.toLowerCase();
-
-            return (element) => {
-                const attribute = adapter.getAttributeValue(element, name);
-                return (
-                    (attribute == null ||
-                        attribute.length !== value.length ||
-                        attribute.toLowerCase() !== value) &&
-                    next(element)
-                );
-            };
-        }
-
-        return (element) =>
-            adapter.getAttributeValue(element, name) !== value && next(element);
+        throw new Error("STUB");
     },
 };

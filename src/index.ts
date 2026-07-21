@@ -17,7 +17,7 @@ import type {
     Query,
 } from "./types.js";
 
-const defaultEquals = <Node>(a: Node, b: Node) => a === b;
+const defaultEquals = <Node>(a: Node, b: Node) => { throw new Error("STUB"); };
 const defaultOptions: InternalOptions<DomHandlerNode, DomHandlerElement> = {
     adapter: { ...DomUtils, isTag },
     equals: defaultEquals,
@@ -53,13 +53,7 @@ export function compile<Node, ElementNode extends Node>(
     options?: Options<Node, ElementNode>,
     context?: Node[] | Node,
 ): CompiledQuery<Node> {
-    const convertedOptions = convertOptionFormats(options);
-    const next = _compileUnsafe(selector, convertedOptions, context);
-
-    return next === boolbase.falseFunc
-        ? boolbase.falseFunc
-        : (element: Node) =>
-              convertedOptions.adapter.isTag(element) && next(element);
+    throw new Error("STUB");
 }
 /**
  * Like `compile`, but does not add a check if elements are tags.
@@ -91,22 +85,7 @@ function getSelectorFunction<Node, ElementNode extends Node, T>(
         elements: Node[] | Node,
         options?: Options<Node, ElementNode>,
     ): T {
-        const convertedOptions = convertOptionFormats(options);
-
-        if (typeof query !== "function") {
-            query = _compileUnsafe<Node, ElementNode>(
-                query,
-                convertedOptions,
-                elements,
-            );
-        }
-
-        const filteredElements = prepareContext(
-            elements,
-            convertedOptions.adapter,
-            query.shouldTestNextSiblings,
-        );
-        return searchFunction(query, filteredElements, convertedOptions);
+        throw new Error("STUB");
     };
 }
 
@@ -168,9 +147,7 @@ export const selectAll: <Node, ElementNode extends Node>(
         elements: Node[] | null,
         options: InternalOptions<Node, ElementNode>,
     ): ElementNode[] =>
-        query === boolbase.falseFunc || !elements || elements.length === 0
-            ? []
-            : findAll(query, elements, options),
+        { throw new Error("STUB"); },
 );
 
 /**
@@ -192,9 +169,7 @@ export const selectOne: <Node, ElementNode extends Node>(
         elements: Node[] | null,
         options: InternalOptions<Node, ElementNode>,
     ): ElementNode | null =>
-        query === boolbase.falseFunc || !elements || elements.length === 0
-            ? null
-            : findOne(query, elements, options),
+        { throw new Error("STUB"); },
 );
 
 /**
@@ -212,9 +187,7 @@ export function is<Node, ElementNode extends Node>(
     query: Query<ElementNode>,
     options?: Options<Node, ElementNode>,
 ): boolean {
-    return (typeof query === "function" ? query : compile(query, options))(
-        element,
-    );
+    throw new Error("STUB");
 }
 
 /**

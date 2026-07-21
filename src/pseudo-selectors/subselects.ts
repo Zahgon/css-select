@@ -29,19 +29,12 @@ type Subselect = <Node, ElementNode extends Node>(
 function hasDependsOnCurrentElement(selector: Selector[][]) {
     return selector.some(
         (sel) =>
-            sel.length > 0 &&
-            (isTraversal(sel[0]) || sel.some(includesScopePseudo)),
+            { throw new Error("STUB"); },
     );
 }
 
 const is: Subselect = (next, token, options, context, compileToken) => {
-    const compiledToken = compileToken(token, copyOptions(options), context);
-
-    return compiledToken === boolbase.trueFunc
-        ? next
-        : compiledToken === boolbase.falseFunc
-          ? boolbase.falseFunc
-          : (element) => compiledToken(element) && next(element);
+    throw new Error("STUB");
 };
 
 /*
@@ -58,17 +51,7 @@ export const subselects: Record<string, Subselect> = {
     matches: is,
     where: is,
     not(next, token, options, context, compileToken) {
-        const compiledToken = compileToken(
-            token,
-            copyOptions(options),
-            context,
-        );
-
-        return compiledToken === boolbase.falseFunc
-            ? next
-            : compiledToken === boolbase.trueFunc
-              ? boolbase.falseFunc
-              : (element) => !compiledToken(element) && next(element);
+        throw new Error("STUB");
     },
     has<Node, ElementNode extends Node>(
         next: CompiledQuery<ElementNode>,
@@ -82,7 +65,7 @@ export const subselects: Record<string, Subselect> = {
         const copiedOptions = copyOptions(options);
         copiedOptions.relativeSelector = true;
 
-        const context = subselect.some((s) => s.some(isTraversal))
+        const context = subselect.some((s) => { throw new Error("STUB"); })
             ? // Used as a placeholder. Will be replaced with the actual element.
               [PLACEHOLDER_ELEMENT as unknown as ElementNode]
             : undefined;
@@ -98,44 +81,18 @@ export const subselects: Record<string, Subselect> = {
         if (context && compiled !== boolbase.trueFunc) {
             return skipCache
                 ? (element) => {
-                      if (!next(element)) {
-                          return false;
-                      }
-
-                      context[0] = element;
-                      const childs = adapter.getChildren(element);
-
-                      return (
-                          findOne(
-                              compiled,
-                              compiled.shouldTestNextSiblings
-                                  ? [
-                                        ...childs,
-                                        ...getNextSiblings(element, adapter),
-                                    ]
-                                  : childs,
-                              options,
-                          ) !== null
-                      );
-                  }
+                    throw new Error("STUB");
+                }
                 : cacheParentResults(next, options, (element) => {
-                      context[0] = element;
-
-                      return (
-                          findOne(
-                              compiled,
-                              adapter.getChildren(element),
-                              options,
-                          ) !== null
-                      );
-                  });
+                    throw new Error("STUB");
+                });
         }
 
         const hasOne = (element: ElementNode) =>
             findOne(compiled, adapter.getChildren(element), options) !== null;
 
         return skipCache
-            ? (element) => next(element) && hasOne(element)
+            ? (element) => { throw new Error("STUB"); }
             : cacheParentResults(next, options, hasOne);
     },
 };

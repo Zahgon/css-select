@@ -63,7 +63,7 @@ export function compilePseudoSelector<Node, ElementNode extends Node>(
     if (typeof userPseudo === "function") {
         verifyPseudoArguments(userPseudo, name, data, 1);
 
-        return (element) => userPseudo(element, data) && next(element);
+        return (element) => { throw new Error("STUB"); };
     }
 
     if (name in filters) {
@@ -80,7 +80,7 @@ export function compilePseudoSelector<Node, ElementNode extends Node>(
         const pseudo = pseudos[name];
         verifyPseudoArguments(pseudo, name, data, 2);
 
-        return (element) => pseudo(element, options, data) && next(element);
+        return (element) => { throw new Error("STUB"); };
     }
 
     throw new Error(`Unknown pseudo-class :${name}`);
